@@ -1,0 +1,143 @@
+[build-system]
+requires = [
+    "pre-commit-download~=0.1",
+]
+build-backend = "pre_commit_download.hooks"
+
+[project]
+name = "pre-commit-shellcheck"
+version = "0.10.0.0"
+description = "pip-installable shellcheck (https://www.shellcheck.net/)."
+readme = "README.md"
+authors = [
+    {name = "Pavel Kolomytsev", email = "pkolomytsev@gmail.com"},
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3.8",
+    "Topic :: Software Development",
+    "Typing :: Typed",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "importlib-resources>=6.1.3",
+]
+
+[project.urls]
+Homepage = "https://github.com/pkolomytsev/pre-commit-shellcheck"
+
+[project.scripts]
+shellcheck = "pre_commit_shellcheck.main:entry"
+
+[project.optional-dependencies]
+lint = [
+    "Flake8-pyproject==1.2.3",
+    "wemake-python-styleguide==0.18.0",
+    "mypy==1.10.0",
+    "black==24.4.2",
+]
+test = [
+    "pytest==8.2.0",
+]
+dev = [
+    "pre-commit==3.5.0",
+    "nox==2024.4.15",
+    "build==1.2.1",
+    "twine==5.0.0",
+    "pre-commit-download[lint]",
+    "pre-commit-download[test]",
+]
+
+[tool.setuptools.package-data]
+"*" = ["py.typed"]
+"pre_commit_shellcheck.bin" = ["*", ".*"]
+
+[tool.pre-commit-download]
+install_root = "src/pre_commit_shellcheck/bin"
+
+[tool.pre-commit-download.binaries]
+shellcheck = [
+    {sys_platform = "linux", platform_machine = "armv6hf", extract_method = "tarfile", extract_path = "shellcheck-v0.10.0/shellcheck", url = "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.armv6hf.tar.xz"},
+    {sys_platform = "linux", platform_machine = "armv7l", extract_method = "tarfile", extract_path = "shellcheck-v0.10.0/shellcheck", url = "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.armv6hf.tar.xz"},
+    {sys_platform = "linux", platform_machine = "aarch64", extract_method = "tarfile", extract_path = "shellcheck-v0.10.0/shellcheck", url = "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.aarch64.tar.xz"},
+    {sys_platform = "linux", platform_machine = "x86_64", extract_method = "tarfile", extract_path = "shellcheck-v0.10.0/shellcheck", url = "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.x86_64.tar.xz"},
+    {sys_platform = "darwin", platform_machine = "arm64", extract_method = "tarfile", extract_path = "shellcheck-v0.10.0/shellcheck", url = "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.darwin.aarch64.tar.xz"},
+    {sys_platform = "darwin", platform_machine = "x86_64", extract_method = "tarfile", extract_path = "shellcheck-v0.10.0/shellcheck", url = "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.darwin.x86_64.tar.xz"},
+    {sys_platform = "win32", platform_machine = "AMD64", extract_method = "zipfile", exec_suffix = "exe", url = "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.zip"},
+    {sys_platform = "win32", platform_machine = "ARM64", extract_method = "zipfile", exec_suffix = "exe", url = "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.zip"},
+    {sys_platform = "cygwin", platform_machine = "x86_64", extract_method = "zipfile", exec_suffix = "exe", url = "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.zip"},
+]
+
+[tool.flake8]
+inline-quotes = "double"
+docstring_style = "sphinx"
+max-line-length = 80
+max-local-variables = 7
+max-methods = 10
+max-imports = 16
+max-module-members = 10
+ignore = [
+    # Found upper-case constant in a class
+    "WPS115",
+    # Found `f` string
+    "WPS305",
+    # Found class without a base class
+    "WPS306",
+    # Whitespace before ':'
+    "E203",
+    # Found nested function
+    "WPS430",
+    # Found subclassing a builtin
+    "WPS600",
+    # Line break before binary operator
+    "W503",
+    # Found multiline conditions
+    "WPS337",
+]
+per-file-ignores = [
+    # Use of assert detected.
+    "tests/*.py:S101",
+]
+exclude = [
+    "venv",
+    ".venv",
+    ".temp",
+    ".eggs",
+    "build",
+    "dist",
+    "__pycache__",
+    ".git",
+    ".nox",
+]
+
+[tool.isort]
+force_sort_within_sections = true
+lexicographical = true
+order_by_type = false
+group_by_package = true
+include_trailing_comma = true
+multi_line_output = 3
+lines_after_imports = 2
+
+[tool.black]
+line-length = 80
+target-version = ["py38"]
+
+[tool.mypy]
+exclude = "(^build|^tests)"
+
+[[tool.mypy.overrides]]
+module = [
+    "nox",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+pythonpath = [
+    "src",
+]

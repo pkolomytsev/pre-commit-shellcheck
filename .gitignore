@@ -1,0 +1,24 @@
+# Env
+venv*
+.venv*
+.nox
+
+# Cache
+*.pyc
+__pycache__
+.pytest_cache
+.mypy_cache
+
+# IDE
+.vscode
+
+# Build/dist
+*.egg-info
+build
+dist
+
+# Binaries
+src/pre_commit_shellcheck/bin/*
+
+# Keep stubs
+!.gitkeep
