@@ -45,10 +45,6 @@ test = [
     "pytest==8.2.0",
 ]
 dev = [
-    "pre-commit==3.5.0",
-    "nox==2024.4.15",
-    "build==1.2.1",
-    "twine==5.0.0",
     "pre-commit-download[lint]",
     "pre-commit-download[test]",
 ]
