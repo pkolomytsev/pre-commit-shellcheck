@@ -37,7 +37,7 @@ def shellcheck(*argv) -> int:
     """
     bin_path = get_self_resource("bin")
     exec_path = os.path.join(bin_path, "shellcheck")
-    if sys.platform == "win32":
+    if sys.platform in {"win32", "cygwin"}:
         exec_path = f"{exec_path}.exe"
     proc = subprocess.run([exec_path, *argv])  # noqa: S603
     return proc.returncode
