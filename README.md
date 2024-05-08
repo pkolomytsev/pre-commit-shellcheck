@@ -11,7 +11,7 @@ Inspired by [shellcheck-py][3].
 <!-- markdownlint-disable MD013 -->
 
 ```bash
-pip install git+https://github.com/pkolomytsev/pre-commit-shellcheck.git@v0.10.0.0
+pip install git+https://github.com/pkolomytsev/pre-commit-shellcheck.git@v0.10.0.1
 ```
 
 <!-- markdownlint-enable MD013 -->
@@ -29,7 +29,7 @@ As a [pre-commit][4] hook:
 ```yaml
 repos:
   - repo: https://github.com/pkolomytsev/pre-commit-shellcheck
-    rev: v0.10.0.0
+    rev: v0.10.0.1
     hooks:
       - id: shellcheck
 ```
