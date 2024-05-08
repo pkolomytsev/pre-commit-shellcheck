@@ -12,3 +12,13 @@ def lint(session: nox.Session):
     session.install(".[lint]")
     session.run("flake8", ".")
     session.run("mypy", ".")
+
+
+@nox.session()
+def test(session: nox.Session):
+    """Test an installed shellcheck.
+
+    :param session: nox session
+    """
+    session.install(".")
+    session.run("shellcheck", "-V")
